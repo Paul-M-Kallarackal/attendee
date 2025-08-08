@@ -8,7 +8,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from accounts.models import Organization, User
-from bots.models import CreditTransaction, Project
+from bots.core.models import CreditTransaction, Project
 from bots.stripe_utils import process_checkout_session_completed
 
 

@@ -3,7 +3,7 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from accounts.models import Organization
-from bots.models import Bot, Project, RecordingFormats, RecordingTypes
+from bots.core.models import Bot, Project, RecordingFormats, RecordingTypes
 
 
 class TestBotCpuRequest(TestCase):

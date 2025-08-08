@@ -6,7 +6,7 @@ from django.utils import timezone as django_timezone
 
 from accounts.models import Organization
 from bots.management.commands.run_scheduler import Command
-from bots.models import Bot, BotStates, Project
+from bots.core.models import Bot, BotStates, Project
 
 
 class RunSchedulerCommandTestCase(TestCase):

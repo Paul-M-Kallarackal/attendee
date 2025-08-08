@@ -5,7 +5,7 @@ from django.db import IntegrityError, transaction
 from django.test import TestCase, TransactionTestCase
 from django.utils import timezone
 
-from bots.models import Bot, CreditTransaction, CreditTransactionManager, Organization, Project
+from bots.core.models import Bot, CreditTransaction, CreditTransactionManager, Organization, Project
 
 
 class TestBotCreditCalculation(TestCase):

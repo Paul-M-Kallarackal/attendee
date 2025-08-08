@@ -11,9 +11,9 @@ from django.db import connection
 from django.test.testcases import TransactionTestCase
 from selenium.common.exceptions import TimeoutException
 
-from bots.bot_controller import BotController
+from bots.controller.bot_controller import BotController
 from bots.google_meet_bot_adapter.google_meet_ui_methods import GoogleMeetUIMethods
-from bots.models import (
+from bots.core.models import (
     Bot,
     BotEventManager,
     BotEventSubTypes,
@@ -87,7 +87,7 @@ class TestGoogleMeetBot(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
     @patch("deepgram.DeepgramClient")
@@ -316,7 +316,7 @@ class TestGoogleMeetBot(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.look_for_blocked_element", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.look_for_denied_your_request_element", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.click_this_meeting_is_being_recorded_join_now_button", return_value=None)
@@ -442,7 +442,7 @@ class TestGoogleMeetBot(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
     @patch("time.time")
@@ -595,7 +595,7 @@ class TestGoogleMeetBot(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
     def test_google_meet_bot_can_join_meeting_and_record_audio_and_video(
@@ -753,10 +753,10 @@ class TestGoogleMeetBot(TransactionTestCase):
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
     @patch("bots.google_meet_bot_adapter.google_meet_bot_adapter.GoogleMeetBotAdapter.send_raw_audio")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
-    @patch("bots.bot_controller.bot_controller.BotWebsocketClient")
+    @patch("bots.controller.utils.bot_websocket_client.BotWebsocketClient")
     @patch("time.time")
     def test_bot_bidirectional_audio_streaming_via_websockets(
         self,

@@ -6,7 +6,7 @@ from django.test import Client, TransactionTestCase
 from django.urls import reverse
 
 from accounts.models import Organization, User, UserRole
-from bots.models import Project, ProjectAccess
+from bots.core.models import Project, ProjectAccess
 
 
 class InviteUserIntegrationTest(TransactionTestCase):

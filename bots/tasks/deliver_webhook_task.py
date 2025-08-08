@@ -4,8 +4,8 @@ import requests
 from celery import shared_task
 from django.utils import timezone
 
-from bots.models import WebhookDeliveryAttempt, WebhookDeliveryAttemptStatus, WebhookTriggerTypes
-from bots.webhook_utils import sign_payload
+from bots.core.models import WebhookDeliveryAttempt, WebhookDeliveryAttemptStatus, WebhookTriggerTypes
+from bots.webhooks.utils import sign_payload
 
 logger = logging.getLogger(__name__)
 

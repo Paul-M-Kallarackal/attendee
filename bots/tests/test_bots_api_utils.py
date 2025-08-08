@@ -5,8 +5,8 @@ from django.test import TestCase
 from django.utils import timezone
 
 from accounts.models import Organization
-from bots.bots_api_utils import BotCreationSource, create_bot, create_webhook_subscription, validate_meeting_url_and_credentials
-from bots.models import Bot, BotEventTypes, BotStates, Credentials, Project, TranscriptionProviders, WebhookSubscription, WebhookTriggerTypes
+from bots.api.utils import BotCreationSource, create_bot, create_webhook_subscription, validate_meeting_url_and_credentials
+from bots.core.models import Bot, BotEventTypes, BotStates, Credentials, Project, TranscriptionProviders, WebhookSubscription, WebhookTriggerTypes
 
 
 class TestValidateMeetingUrlAndCredentials(TestCase):

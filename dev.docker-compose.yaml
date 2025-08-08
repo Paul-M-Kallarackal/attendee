@@ -1,4 +1,11 @@
 services:
+  debug:
+    build: ./
+    
+    networks:
+      - attendee_network
+    
+
   attendee-worker-local:
     build: ./
     volumes:
@@ -30,15 +37,17 @@ services:
     networks:
       - attendee_network
     ports:
-      - "8000:8000"
+      - "5000:5000"
     environment:
       - POSTGRES_HOST=postgres
       - REDIS_URL=redis://redis:6379/5
       - DJANGO_SETTINGS_MODULE=attendee.settings.development
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:5000
 
   postgres:
     image: postgres:15.3-alpine
+    ports:
+      - "6095:5432"
     environment:
       POSTGRES_DB: attendee_development
       POSTGRES_USER: attendee_development_user

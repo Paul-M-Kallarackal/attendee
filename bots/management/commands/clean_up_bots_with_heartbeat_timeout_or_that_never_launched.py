@@ -6,7 +6,7 @@ from django.db import models
 from django.utils import timezone
 from kubernetes import client, config
 
-from bots.models import Bot, BotEventManager, BotEventSubTypes, BotEventTypes
+from bots.core.models import Bot, BotEventManager, BotEventSubTypes, BotEventTypes
 
 logger = logging.getLogger(__name__)
 

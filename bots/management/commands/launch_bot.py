@@ -3,7 +3,7 @@ import logging
 
 from django.core.management.base import BaseCommand
 
-from bots.models import (
+from bots.core.models import (
     Bot,
     BotEventManager,
     BotEventTypes,

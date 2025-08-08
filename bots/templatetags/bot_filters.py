@@ -2,7 +2,7 @@ import hashlib
 
 from django import template
 
-from bots.models import WebhookTriggerTypes
+from bots.core.models import WebhookTriggerTypes
 
 register = template.Library()
 

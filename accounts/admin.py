@@ -72,7 +72,7 @@ class OrganizationAdmin(admin.ModelAdmin):
                 centicredits = int(amount * 100)
 
                 # Import here to avoid circular import
-                from bots.models import CreditTransactionManager
+                from bots.core.models import CreditTransactionManager
 
                 # Create the transaction
                 CreditTransactionManager.create_transaction(organization=org, centicredits_delta=centicredits, description=description)

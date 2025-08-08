@@ -4,7 +4,7 @@ from django.core.files.base import ContentFile
 from django.test import TransactionTestCase
 from django.test.utils import override_settings
 
-from bots.models import Bot, BotDebugScreenshot, BotEvent, BotEventTypes, BotStates, ChatMessage, ChatMessageToOptions, Organization, Participant, Project, Recording, RecordingStates, Utterance, WebhookSubscription, WebhookTriggerTypes
+from bots.core.models import Bot, BotDebugScreenshot, BotEvent, BotEventTypes, BotStates, ChatMessage, ChatMessageToOptions, Organization, Participant, Project, Recording, RecordingStates, Utterance, WebhookSubscription, WebhookTriggerTypes
 
 
 def mock_file_field_delete_sets_name_to_none(instance, save=True):
@@ -140,7 +140,7 @@ class TestBotDeletion(TransactionTestCase):
         """Test that hard deleting a bot fails when there are CreditTransaction references (PROTECT)"""
         from django.db.models import ProtectedError
 
-        from bots.models import CreditTransactionManager
+        from bots.core.models import CreditTransactionManager
 
         # Create a credit transaction for bot1
         CreditTransactionManager.create_transaction(organization=self.organization, centicredits_delta=-100, bot=self.bot1, description="Test transaction")

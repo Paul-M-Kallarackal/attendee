@@ -4,10 +4,10 @@ import time
 from celery import shared_task
 from kubernetes import client, config
 
-from bots.models import Bot, BotEventTypes
+from bots.core.models import Bot, BotEventTypes
 
 logger = logging.getLogger(__name__)
-from bots.bot_pod_creator import BotPodCreator
+from bots.infrastructure.pod_creator import BotPodCreator
 
 
 @shared_task(bind=True, soft_time_limit=3600)

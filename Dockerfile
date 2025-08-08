@@ -44,7 +44,10 @@ RUN apt-get update  \
     unzip \
     zip \
     vim \
-    libpq-dev
+    libpq-dev \
+    iputils-ping \
+    dnsutils \
+    net-tools
 
 # Install Chrome dependencies
 RUN apt-get install -y xvfb x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic x11-apps libvulkan1 fonts-liberation xdg-utils wget

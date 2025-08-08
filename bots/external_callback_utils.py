@@ -3,8 +3,8 @@ from typing import Dict, Optional
 
 import requests
 
-from bots.models import WebhookSecret
-from bots.webhook_utils import sign_payload
+from bots.core.models import WebhookSecret
+from bots.webhooks.utils import sign_payload
 
 logger = logging.getLogger(__name__)
 

@@ -1,0 +1,85 @@
+<csp:parameters xmlns:csp="https://confluence.smart.publisher/csp">
+  <csp:file_id></csp:file_id>
+  <csp:labels_list></csp:labels_list>
+  <csp:parent_id></csp:parent_id>
+  <csp:properties>
+    <csp:key>content-appearance-published</csp:key>
+    <csp:value>fixed-width</csp:value>
+    <csp:key>content-appearance-draft</csp:key>
+    <csp:value>fixed-width</csp:value>
+  </csp:properties>
+</csp:parameters>
+
+<h1>Contributing to Attendee</h1>
+<p>Thank you for your interest in contributing to Attendee! This document provides guidelines and instructions for contributing to the project.</p>
+<h2>Getting Started</h2>
+<ol>
+<li><p>Fork the repository and clone it locally</p>
+</li>
+<li><p>Set up the development environment:</p>
+<pre><code class="language-bash"># Build the Docker image (takes ~5 minutes)
+docker compose -f dev.docker-compose.yaml build
+
+# Create local environment variables
+docker compose -f dev.docker-compose.yaml run --rm attendee-app-local python init_env.py &gt; .env
+
+# Edit .env and add your AWS credentials
+
+# Start all services
+docker compose -f dev.docker-compose.yaml up
+
+# In a separate terminal, run migrations
+docker compose -f dev.docker-compose.yaml exec attendee-app-local python manage.py migrate
+</code></pre>
+</li>
+<li><p>Create a new branch for your changes:</p>
+<pre><code class="language-bash">git switch -c feature/your-feature-name
+</code></pre>
+</li>
+</ol>
+<h2>Development Guidelines</h2>
+<h3>Code Style</h3>
+<p>We use Ruff for both linting and formatting. The configuration can be found in <code>pyproject.toml</code>. To ensure your code meets our style guidelines:</p>
+<ol>
+<li><p>Install pre-commit hooks:</p>
+<pre><code class="language-bash">pip install pre-commit
+pre-commit install
+</code></pre>
+</li>
+<li><p>The pre-commit hooks will automatically:</p>
+<ul>
+<li>Run the Ruff linter with auto-fixing enabled</li>
+<li>Run the Ruff formatter</li>
+<li>Check for common issues</li>
+</ul>
+</li>
+</ol>
+<h3>Documentation</h3>
+<p>Contributing to documentation means modifying the files in the <code>docs</code> directory.</p>
+<ul>
+<li>Update the API documentation in <code>docs/openapi.yml</code> for any API changes</li>
+<li>Update the README.md if necessary</li>
+<li>For other types documentation, see the related *.md file in the <code>docs</code> directory</li>
+</ul>
+<h2>Pull Request Process</h2>
+<ol>
+<li>Create a Pull Request with a clear title and description</li>
+<li>Update the documentation as needed</li>
+<li>Reference any related issues in your PR description</li>
+<li>Wait for review from maintainers</li>
+</ol>
+<h2>Reporting Issues</h2>
+<p>When reporting issues, please include:</p>
+<ul>
+<li>A clear description of the problem</li>
+<li>Steps to reproduce</li>
+<li>Expected vs actual behavior</li>
+<li>Relevant logs or screenshots</li>
+</ul>
+<h2>Community</h2>
+<ul>
+<li>Join our <a href="https://join.slack.com/t/attendeecommu-rff8300/shared_invite/zt-2uhpam6p2-ZzLAoVrljbL2UEjqdSHrgQ">Slack Community</a> for discussions</li>
+<li>Star the repository if you find it useful</li>
+</ul>
+<h2>License</h2>
+<p>By contributing to Attendee, you agree that your contributions will be licensed under the same license as the project.</p>

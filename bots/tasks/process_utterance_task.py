@@ -8,10 +8,10 @@ from celery import shared_task
 
 logger = logging.getLogger(__name__)
 
-from bots.models import Credentials, RecordingManager, TranscriptionFailureReasons, TranscriptionProviders, Utterance, WebhookTriggerTypes
-from bots.utils import pcm_to_mp3
-from bots.webhook_payloads import utterance_webhook_payload
-from bots.webhook_utils import trigger_webhook
+from bots.core.models import Credentials, RecordingManager, TranscriptionFailureReasons, TranscriptionProviders, Utterance, WebhookTriggerTypes
+from bots.core.utils import pcm_to_mp3
+from bots.webhooks.payloads import utterance_webhook_payload
+from bots.webhooks.utils import trigger_webhook
 
 
 def is_retryable_failure(failure_data):

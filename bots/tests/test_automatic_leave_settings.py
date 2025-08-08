@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from bots.models import Bot, Organization, Project
+from bots.core.models import Bot, Organization, Project
 
 
 class AutomaticLeaveSettingsTests(TestCase):
@@ -74,7 +74,7 @@ class AutomaticLeaveSettingsTests(TestCase):
         """
         from rest_framework.exceptions import ValidationError
 
-        from bots.serializers import CreateBotSerializer
+        from bots.core.serializers import CreateBotSerializer
 
         # Test with valid integers
         valid_settings = {

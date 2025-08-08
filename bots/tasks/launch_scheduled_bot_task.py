@@ -2,8 +2,8 @@ import logging
 
 from celery import shared_task
 
-from bots.launch_bot_utils import launch_bot
-from bots.models import Bot, BotEventManager, BotEventSubTypes, BotEventTypes, BotStates
+from bots.infrastructure.launch_utils import launch_bot
+from bots.core.models import Bot, BotEventManager, BotEventSubTypes, BotEventTypes, BotStates
 
 logger = logging.getLogger(__name__)
 

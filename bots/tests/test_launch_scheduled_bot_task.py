@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils import timezone as django_timezone
 
 from accounts.models import Organization
-from bots.models import Bot, BotEventSubTypes, BotEventTypes, BotStates, Project
+from bots.core.models import Bot, BotEventSubTypes, BotEventTypes, BotStates, Project
 from bots.tasks.launch_scheduled_bot_task import launch_scheduled_bot
 
 

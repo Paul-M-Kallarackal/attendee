@@ -12,7 +12,7 @@ from django.test import Client, TransactionTestCase, override_settings
 from django.urls import reverse
 
 from accounts.models import User
-from bots.models import Project
+from bots.core.models import Project
 
 
 class UserSignupIntegrationTest(TransactionTestCase):

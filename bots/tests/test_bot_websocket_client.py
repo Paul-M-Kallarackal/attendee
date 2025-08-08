@@ -7,7 +7,7 @@ from unittest.mock import Mock, call, patch
 
 from websockets import ConnectionClosed
 
-from bots.bot_controller.bot_websocket_client import BotWebsocketClient
+from bots.controller.utils.bot_websocket_client import BotWebsocketClient
 
 
 class TestBotWebsocketClient(unittest.TestCase):
@@ -61,7 +61,7 @@ class TestBotWebsocketClient(unittest.TestCase):
     #  Connection and threading tests                                       #
     # --------------------------------------------------------------------- #
 
-    @patch("bots.bot_controller.bot_websocket_client.connect")
+    @patch("bots.controller.utils.bot_websocket_client.connect")
     def test_start_successful_connection(self, mock_connect):
         """Test successful websocket connection."""
         mock_websocket = Mock()
@@ -84,8 +84,8 @@ class TestBotWebsocketClient(unittest.TestCase):
         self.assertTrue(self.client.recv_loop_thread.is_alive())
         self.assertTrue(self.client.send_loop_thread.is_alive())
 
-    @patch("bots.bot_controller.bot_websocket_client.connect")
-    @patch("bots.bot_controller.bot_websocket_client.time.sleep")
+    @patch("bots.controller.utils.bot_websocket_client.connect")
+    @patch("bots.controller.utils.bot_websocket_client.time.sleep")
     def test_connection_retries_on_failure(self, mock_sleep, mock_connect):
         """Test that connection retries on failure."""
         # Make connection fail a few times then succeed
@@ -103,8 +103,8 @@ class TestBotWebsocketClient(unittest.TestCase):
         self.assertEqual(mock_sleep.call_count, 2)  # Sleep between retries (not after last success)
         self.assertEqual(self.client.connection_state, BotWebsocketClient.CONNECTED)
 
-    @patch("bots.bot_controller.bot_websocket_client.connect")
-    @patch("bots.bot_controller.bot_websocket_client.time.sleep")
+    @patch("bots.controller.utils.bot_websocket_client.connect")
+    @patch("bots.controller.utils.bot_websocket_client.time.sleep")
     def test_connection_fails_after_max_retries(self, mock_sleep, mock_connect):
         """Test that connection fails after max retries are exhausted."""
         mock_connect.side_effect = ConnectionError("Connection failed")
@@ -126,7 +126,7 @@ class TestBotWebsocketClient(unittest.TestCase):
     def test_start_connection_thread_already_running(self):
         """Test that starting when already connecting doesn't create duplicate threads."""
         # Test case 1: When state is already CONNECTING
-        with patch("bots.bot_controller.bot_websocket_client.Thread") as mock_thread_class:
+        with patch("bots.controller.utils.bot_websocket_client.Thread") as mock_thread_class:
             mock_thread = Mock()
             mock_thread_class.return_value = mock_thread
 
@@ -150,7 +150,7 @@ class TestBotWebsocketClient(unittest.TestCase):
     def test_start_connection_thread_with_alive_thread(self):
         """Test that starting when connection thread is alive doesn't create duplicate threads."""
         # Test case 2: When connection_thread exists and is alive
-        with patch("bots.bot_controller.bot_websocket_client.Thread") as mock_thread_class:
+        with patch("bots.controller.utils.bot_websocket_client.Thread") as mock_thread_class:
             mock_thread = Mock()
             mock_thread.is_alive.return_value = True  # Thread is alive
             mock_thread_class.return_value = mock_thread
@@ -175,7 +175,7 @@ class TestBotWebsocketClient(unittest.TestCase):
 
     def test_start_connection_thread_creates_new_when_appropriate(self):
         """Test that start creates a new thread when appropriate."""
-        with patch("bots.bot_controller.bot_websocket_client.Thread") as mock_thread_class:
+        with patch("bots.controller.utils.bot_websocket_client.Thread") as mock_thread_class:
             mock_thread = Mock()
             mock_thread_class.return_value = mock_thread
 
@@ -201,7 +201,7 @@ class TestBotWebsocketClient(unittest.TestCase):
 
     def test_start_connection_thread_replaces_dead_thread(self):
         """Test that start creates a new thread when existing thread is dead."""
-        with patch("bots.bot_controller.bot_websocket_client.Thread") as mock_thread_class:
+        with patch("bots.controller.utils.bot_websocket_client.Thread") as mock_thread_class:
             mock_new_thread = Mock()
             mock_thread_class.return_value = mock_new_thread
 
@@ -240,7 +240,7 @@ class TestBotWebsocketClient(unittest.TestCase):
         self.client.connection_state = BotWebsocketClient.NOT_STARTED
         test_message = {"type": "test", "data": "hello"}
 
-        with patch("bots.bot_controller.bot_websocket_client.logger") as mock_logger:
+        with patch("bots.controller.utils.bot_websocket_client.logger") as mock_logger:
             self.client.send_async(test_message)
 
             # Message should not be in queue
@@ -374,7 +374,7 @@ class TestBotWebsocketClient(unittest.TestCase):
         mock_websocket.close.side_effect = ConnectionError("Close failed")
         self.client.websocket = mock_websocket
 
-        with patch("bots.bot_controller.bot_websocket_client.logger") as mock_logger:
+        with patch("bots.controller.utils.bot_websocket_client.logger") as mock_logger:
             self.client.cleanup()
 
             # Should log error but still set state to STOPPED
@@ -393,7 +393,7 @@ class TestBotWebsocketClient(unittest.TestCase):
     #  Integration-style tests                                              #
     # --------------------------------------------------------------------- #
 
-    @patch("bots.bot_controller.bot_websocket_client.connect")
+    @patch("bots.controller.utils.bot_websocket_client.connect")
     def test_full_lifecycle(self, mock_connect):
         """Test a full connection lifecycle."""
         mock_websocket = Mock()

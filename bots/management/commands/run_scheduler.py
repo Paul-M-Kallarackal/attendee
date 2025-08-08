@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from django.db import connection, transaction
 from django.utils import timezone
 
-from bots.models import Bot, BotStates
+from bots.core.models import Bot, BotStates
 from bots.tasks.launch_scheduled_bot_task import launch_scheduled_bot
 
 log = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ from unittest import mock
 
 from django.test import TransactionTestCase
 
-from bots.models import (
+from bots.core.models import (
     Bot,
     Credentials,
     Organization,
@@ -601,7 +601,7 @@ from unittest import mock
 
 from django.test import TransactionTestCase
 
-from bots.models import (
+from bots.core.models import (
     Credentials as CredModel,
 )
 
@@ -924,7 +924,7 @@ class OpenAIModelValidationTest(TransactionTestCase):
     @mock.patch.dict("os.environ", {}, clear=True)
     def test_get_openai_model_enum_default(self):
         """Test that default models are returned when no env var is set"""
-        from bots.serializers import get_openai_model_enum
+        from bots.core.serializers import get_openai_model_enum
 
         models = get_openai_model_enum()
         expected = ["gpt-4o-transcribe", "gpt-4o-mini-transcribe"]
@@ -933,7 +933,7 @@ class OpenAIModelValidationTest(TransactionTestCase):
     @mock.patch.dict("os.environ", {"OPENAI_MODEL_NAME": "custom-whisper-model"})
     def test_get_openai_model_enum_custom_model(self):
         """Test that custom model is added to enum when env var is set"""
-        from bots.serializers import get_openai_model_enum
+        from bots.core.serializers import get_openai_model_enum
 
         models = get_openai_model_enum()
         expected = ["gpt-4o-transcribe", "gpt-4o-mini-transcribe", "custom-whisper-model"]
@@ -942,7 +942,7 @@ class OpenAIModelValidationTest(TransactionTestCase):
     @mock.patch.dict("os.environ", {}, clear=True)
     def test_transcription_settings_validation_default_models(self):
         """Test that default OpenAI models are accepted in validation"""
-        from bots.serializers import CreateBotSerializer
+        from bots.core.serializers import CreateBotSerializer
 
         # Provide initial data with a meeting URL that supports OpenAI transcription
         data = {

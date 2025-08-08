@@ -8,9 +8,9 @@ from django.db import connection
 from django.test.testcases import TransactionTestCase
 from django.utils import timezone
 
-from bots.bot_adapter import BotAdapter
-from bots.bot_controller import BotController
-from bots.models import (
+from bots.adapters.base import BotAdapter
+from bots.controller.bot_controller import BotController
+from bots.core.models import (
     Bot,
     BotEventManager,
     BotEventSubTypes,
@@ -157,7 +157,7 @@ class TestGoogleMeetBot2(TransactionTestCase):
 
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.streaming.file_uploader.FileUploader")
     def test_join_retry_on_failure(
         self,
         MockFileUploader,
@@ -371,7 +371,7 @@ class TestGoogleMeetBot2(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
     @patch("time.time")
@@ -451,10 +451,10 @@ class TestGoogleMeetBot2(TransactionTestCase):
         def simulate_caption_data_arrival():
             # Simulate caption data arrival
             caption_data = {"captionId": "caption1", "deviceId": "user1", "text": "This is a test caption from closed captions", "isFinal": 1}
-            controller.closed_caption_manager.upsert_caption(caption_data)
+            controller.captions.closed_caption_manager.upsert_caption(caption_data)
 
             # Force caption processing by flushing
-            controller.closed_caption_manager.flush_captions()
+            controller.captions.closed_caption_manager.flush_captions()
 
             # Simulate chat message arrival
             chat_message_data = {
@@ -666,8 +666,8 @@ class TestGoogleMeetBot2(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
-    @patch("bots.bot_controller.bot_controller.ScreenAndAudioRecorder.start_recording", return_value=None)
+    @patch("bots.controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.ScreenAndAudioRecorder.start_recording", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
     def test_google_meet_bot_can_join_meeting_and_record_audio_in_mp3_format(
@@ -753,11 +753,11 @@ class TestGoogleMeetBot2(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
-    @patch("bots.bot_controller.screen_and_audio_recorder.ScreenAndAudioRecorder.pause_recording", return_value=True)
-    @patch("bots.bot_controller.screen_and_audio_recorder.ScreenAndAudioRecorder.resume_recording", return_value=True)
+    @patch("bots.controller.bot_controller.screen_and_audio_recorder.ScreenAndAudioRecorder.pause_recording", return_value=True)
+    @patch("bots.controller.bot_controller.screen_and_audio_recorder.ScreenAndAudioRecorder.resume_recording", return_value=True)
     @patch("time.time")
     def test_bot_can_pause_and_resume_recording_with_proper_utterance_handling(
         self,
@@ -948,7 +948,7 @@ class TestGoogleMeetBot2(TransactionTestCase):
     @patch("bots.models.Bot.create_debug_recording", return_value=False)
     @patch("bots.web_bot_adapter.web_bot_adapter.Display")
     @patch("bots.web_bot_adapter.web_bot_adapter.webdriver.Chrome")
-    @patch("bots.bot_controller.bot_controller.FileUploader")
+    @patch("bots.controller.bot_controller.bot_controller.FileUploader")
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.check_if_meeting_is_found", return_value=None)
     @patch("bots.google_meet_bot_adapter.google_meet_ui_methods.GoogleMeetUIMethods.wait_for_host_if_needed", return_value=None)
     @patch("time.time")

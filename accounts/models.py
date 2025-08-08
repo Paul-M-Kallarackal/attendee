@@ -73,7 +73,7 @@ from django.dispatch import receiver
 def create_default_organization(sender, instance, **kwargs):
     # Only run this for new users (not updates)
     if not instance.pk and not instance.organization_id:
-        from bots.models import Project
+        from bots.core.models import Project
 
         default_org = Organization.objects.create(name=f"{instance.email}'s organization")
 

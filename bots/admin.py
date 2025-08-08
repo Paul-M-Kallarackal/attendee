@@ -8,7 +8,7 @@ from django.db.models.functions import Extract
 from django.utils import timezone
 from django.utils.html import format_html
 
-from .models import Bot, BotEvent, Utterance, WebhookDeliveryAttempt, WebhookSubscription
+from .core.models import Bot, BotEvent, Utterance, WebhookDeliveryAttempt, WebhookSubscription
 
 
 # Create an inline for BotEvent to show on the Bot admin page

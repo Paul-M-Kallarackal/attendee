@@ -7,7 +7,7 @@ from django.http.request import QueryDict
 from django.test import TransactionTestCase
 
 from accounts.models import User
-from bots.models import (
+from bots.core.models import (
     Bot,
     BotStates,
     Organization,
@@ -20,7 +20,7 @@ from bots.models import (
 )
 from bots.projects_views import CreateWebhookView, DeleteWebhookView, ProjectWebhooksView
 from bots.tasks.deliver_webhook_task import deliver_webhook
-from bots.webhook_utils import sign_payload, verify_signature
+from bots.webhooks.utils import sign_payload, verify_signature
 
 
 class WebhookSubscriptionTest(TransactionTestCase):
@@ -384,7 +384,7 @@ class WebhookDeliveryTest(TransactionTestCase):
     @patch("bots.tasks.deliver_webhook_task.requests.post")
     def test_bot_webhook_prioritization(self, mock_post):
         """Test that bot-level webhooks are prioritized over project-level webhooks"""
-        from bots.webhook_utils import trigger_webhook
+        from bots.webhooks.utils import trigger_webhook
 
         # Mock successful webhook delivery
         mock_post.return_value.status_code = 200
